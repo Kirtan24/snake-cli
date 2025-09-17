@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.dart": "dart",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp"
+    }
+}
