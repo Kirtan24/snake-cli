@@ -13,7 +13,8 @@ using std::chrono::system_clock;
 using namespace std::this_thread;
 
 char direction = 'r';
-bool paused = false; // new pause flag
+bool paused = false;
+vector<int> high_scores;
 
 void input_handler()
 {
@@ -115,6 +116,28 @@ pair<int, int> get_next_head(pair<int, int> current, char direction)
 int update_score(int current_score)
 {
     return current_score + 10;
+}
+
+void update_high_scores(int score)
+{
+    high_scores.push_back(score);
+
+    // sort descending
+    sort(high_scores.begin(), high_scores.end(), greater<int>());
+
+    // keep only top 10
+    if (high_scores.size() > 10)
+        high_scores.resize(10);
+}
+
+void display_high_scores()
+{
+    cout << "\n===== TOP 10 HIGH SCORES =====\n";
+    for (size_t i = 0; i < high_scores.size(); i++)
+    {
+        cout << i + 1 << ". " << high_scores[i] << "\n";
+    }
+    cout << "==============================\n";
 }
 
 void game_play()
