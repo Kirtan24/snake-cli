@@ -95,13 +95,25 @@ pair<int, int> get_next_head(pair<int, int> current, char direction)
     return next;
 }
 
+pair<int, int> generate_food(int size, const deque<pair<int, int>> &snake)
+{
+    while (true)
+    {
+        pair<int, int> f = make_pair(rand() % size, rand() % size);
+        if (find(snake.begin(), snake.end(), f) == snake.end())
+        {
+            return f;
+        }
+    }
+}
+
 void game_play()
 {
     system("clear");
     deque<pair<int, int>> snake;
     snake.push_back(make_pair(0, 0));
 
-    pair<int, int> food = make_pair(rand() % 10, rand() % 10);
+    pair<int, int> food = generate_food(10, snake);
     int game_speed = 200;
 
     for (pair<int, int> head = make_pair(0, 1);; head = get_next_head(head, direction))
@@ -118,10 +130,9 @@ void game_play()
         // food eaten
         else if (head.first == food.first && head.second == food.second)
         {
-            food = make_pair(rand() % 10, rand() % 10);
             snake.push_back(head);
+            food = generate_food(10, snake);
 
-            // speed up game
             if (game_speed > 100)
                 game_speed -= 20;
         }
